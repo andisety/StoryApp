@@ -1,15 +1,12 @@
 package com.andi.storyapp.ui.detail
 
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import com.andi.storyapp.MainActivity
 import com.andi.storyapp.MainActivity.Companion.DATA
 import com.andi.storyapp.databinding.ActivityDetailBinding
-import com.andi.storyapp.databinding.ActivityLoginBinding
-import com.andi.storyapp.model.dummy.StoryDummy
+import com.andi.storyapp.model.response.Story
 import com.bumptech.glide.Glide
 
 class DetailStoryActivity : AppCompatActivity() {
@@ -19,7 +16,7 @@ class DetailStoryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val stori = intent?.getParcelableExtra<StoryDummy>(DATA)
+        val stori = intent?.getParcelableExtra<Story>(DATA)
         supportActionBar?.title = stori?.name
         binding.apply {
             tvName.text = stori?.name

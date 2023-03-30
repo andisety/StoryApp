@@ -18,4 +18,5 @@
     <string name="upload">Upload</string>
     <string name="masukan_deskripsi">Masukan Deskripsi</string>
     <string name="gambar_preview">Gambar Preview</string>
+    <string name="logout">logout</string>
 </resources>

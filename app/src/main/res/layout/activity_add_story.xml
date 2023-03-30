@@ -5,76 +5,92 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".ui.add.AddStoryActivity">
-
-        <ImageView
-            android:id="@+id/ivPreview"
-            android:layout_margin="16dp"
-            android:layout_width="match_parent"
-            android:layout_height="300dp"
-            android:src="@drawable/ic_baseline_image_24"
-            android:scaleType="centerCrop"
-            android:contentDescription="@string/gambar_preview" />
+        android:layout_height="wrap_content">
         <LinearLayout
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            tools:context=".ui.add.AddStoryActivity">
+            <ImageView
+                android:id="@+id/ivPreview"
+                android:layout_margin="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@drawable/ic_baseline_image_24"
+                android:scaleType="centerCrop"
+                android:contentDescription="@string/gambar_preview" />
+            <LinearLayout
 
-            android:layout_gravity="center"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:id="@+id/btnCamera"
+                    android:layout_width="wrap_content"
+                    android:paddingHorizontal="20dp"
+                    android:layout_height="50dp"
+                    android:text="@string/camera"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:background="@drawable/bg_yellow_round"
+                    app:backgroundTint="@null"
+                    style="?android:attr/buttonBarButtonStyle" />
+                <Button
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/btnGaleri"
+                    android:layout_width="wrap_content"
+                    android:paddingHorizontal="20dp"
+                    android:layout_height="50dp"
+                    android:text="@string/galeri"
+                    android:textColor="@color/white"
+                    android:textAllCaps="false"
+                    android:background="@drawable/bg_yellow_round"
+                    app:backgroundTint="@null"
+                    style="?android:attr/buttonBarButtonStyle" />
+            </LinearLayout>
+
+            <EditText
+                android:inputType="textMultiLine"
+                android:layout_margin="16dp"
+                android:id="@+id/etDesc"
+                android:gravity="top"
+                android:paddingTop="16dp"
+                android:hint="@string/masukan_deskripsi"
+                android:paddingHorizontal="16dp"
+                android:background="@drawable/stroke_round_grey"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
+
+            <Button
+                android:id="@+id/btnUpload"
+                android:layout_marginHorizontal="16dp"
+                android:layout_width="match_parent"
+                android:paddingHorizontal="20dp"
+                android:layout_height="50dp"
+                android:text="@string/upload"
+                android:textColor="@color/white"
+                android:textAllCaps="false"
+                android:background="@drawable/bg_yellow_round"
+                app:backgroundTint="@null"/>
+
+        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:layout_marginBottom="10dp"
-                android:layout_marginEnd="10dp"
-                android:id="@+id/btnCamera"
-                android:layout_width="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:layout_height="50dp"
-                android:text="@string/camera"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:background="@drawable/bg_yellow_round"
-                app:backgroundTint="@null"
-                style="?android:attr/buttonBarButtonStyle" />
-            <Button
-                android:layout_marginBottom="10dp"
-                android:id="@+id/btnGaleri"
-                android:layout_width="wrap_content"
-                android:paddingHorizontal="20dp"
-                android:layout_height="50dp"
-                android:text="@string/galeri"
-                android:textColor="@color/white"
-                android:textAllCaps="false"
-                android:background="@drawable/bg_yellow_round"
-                app:backgroundTint="@null"
-                style="?android:attr/buttonBarButtonStyle" />
-        </LinearLayout>
-
-        <EditText
-            android:inputType="text"
-            android:layout_margin="16dp"
-            android:id="@+id/etDesc"
-            android:gravity="top"
-            android:paddingTop="16dp"
-            android:hint="@string/masukan_deskripsi"
-            android:paddingHorizontal="16dp"
-            android:background="@drawable/stroke_round_grey"
-            android:layout_width="match_parent"
-            android:layout_height="200dp" />
-
-        <Button
-            android:id="@+id/btnUpload"
-            android:layout_marginHorizontal="16dp"
-            android:layout_width="match_parent"
-            android:paddingHorizontal="20dp"
-            android:layout_height="50dp"
-            android:text="@string/upload"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
-            android:background="@drawable/bg_yellow_round"
-            app:backgroundTint="@null"/>
-
-    </LinearLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

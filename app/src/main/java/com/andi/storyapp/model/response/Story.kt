@@ -1,8 +1,11 @@
 package com.andi.storyapp.model.response
 
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Story(
     @SerializedName("createdAt")
     val createdAt: String,
@@ -18,4 +21,4 @@ data class Story(
     val name: String,
     @SerializedName("photoUrl")
     val photoUrl: String
-)
+):Parcelable
