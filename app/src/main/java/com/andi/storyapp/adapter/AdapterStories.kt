@@ -5,14 +5,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.andi.storyapp.databinding.ItemStoryBinding
-import com.andi.storyapp.model.response.ResponseStories
 import com.andi.storyapp.model.response.Story
 import com.bumptech.glide.Glide
 
 class AdapterStories(
-    val listStories:ResponseStories,
+    private val listStories:List<Story>,
     val context: Context,
-    val listener:StoriesListener
+    private val listener:StoriesListener
 ): RecyclerView.Adapter<AdapterStories.ViewHolder>() {
 
 
@@ -23,7 +22,7 @@ class AdapterStories(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val story = listStories.listStory[position]
+        val story = listStories[position]
         holder.binding.apply {
             tvName.text = story.name
             tvDes.text = story.description
@@ -39,7 +38,7 @@ class AdapterStories(
     }
 
     override fun getItemCount(): Int {
-        return listStories.listStory.size
+        return listStories.size
     }
 
 

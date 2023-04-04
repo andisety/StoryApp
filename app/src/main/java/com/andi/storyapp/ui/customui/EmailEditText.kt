@@ -6,12 +6,13 @@ import android.graphics.drawable.Drawable
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.util.Patterns
 import android.view.View
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
 import com.andi.storyapp.R
 
-class PasswordEditText:AppCompatEditText {
+class EmailEditText:AppCompatEditText {
     private var showError = true // status error
 
     private lateinit var borderRed: Drawable
@@ -29,7 +30,7 @@ class PasswordEditText:AppCompatEditText {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        hint = "Masukan password anda"
+        hint = "Masukan email anda"
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
 
@@ -45,14 +46,15 @@ class PasswordEditText:AppCompatEditText {
             }
 
             override fun afterTextChanged(s: Editable) {
-                if (s.toString().length < 8) {
-                    showError = true
-                    setError("Inputan harus lebih dari 8 karakter")
-                    background = borderRed
-                } else {
+                if (Patterns.EMAIL_ADDRESS.matcher(s).matches()) {
                     showError = false
                     background = bordergrey
                     setError(null)
+                } else {
+                    showError = true
+                    background = borderRed
+                    setError("Inputan harus email")
+
                 }
             }
         })
@@ -65,4 +67,5 @@ class PasswordEditText:AppCompatEditText {
     private fun setError(error: String?) {
         this.error = error
     }
+
 }

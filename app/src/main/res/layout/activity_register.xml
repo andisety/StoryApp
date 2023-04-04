@@ -16,7 +16,6 @@
         android:layout_marginTop="100dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/sign_up_title"
-        android:textColor="@color/black"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -49,9 +48,16 @@
             android:text="@string/name" />
 
         <EditText
+            android:background="@drawable/stroke_round5_grey"
             android:id="@+id/etname"
+            android:paddingStart="5dp"
+            android:hint="@string/masukan_nama_anda"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            tools:ignore="RtlSymmetry"
+            android:autofillHints=""
+            android:inputType="text" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,10 +65,14 @@
             android:layout_marginTop="15dp"
             android:text="@string/email" />
 
-        <EditText
+        <com.andi.storyapp.ui.customui.EmailEditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:background="@drawable/stroke_round5_grey"
+            android:paddingStart="5dp"
+            android:layout_marginTop="5dp"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -70,10 +80,15 @@
             android:layout_marginTop="15dp"
             android:text="@string/password" />
 
-        <EditText
+        <com.andi.storyapp.ui.customui.PasswordEditText
             android:id="@+id/etPwd"
+            android:paddingStart="5dp"
+            android:inputType="textPassword"
+            android:background="@drawable/stroke_round5_grey"
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            tools:ignore="RtlSymmetry" />
 
     </LinearLayout>
 
@@ -84,6 +99,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginEnd="24dp"
+        android:textColor="@color/white"
         android:background="@drawable/bg_yellow_round"
         android:drawableEnd="@drawable/ic_baseline_arrow_forward_24"
         android:paddingHorizontal="20dp"

@@ -68,7 +68,8 @@
                 android:paddingHorizontal="16dp"
                 android:background="@drawable/stroke_round_grey"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="200dp"
+                android:autofillHints="" />
 
             <Button
                 android:id="@+id/btnUpload"

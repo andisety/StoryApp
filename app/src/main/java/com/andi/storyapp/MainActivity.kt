@@ -1,58 +1,64 @@
 package com.andi.storyapp
 
 import android.Manifest
+import android.app.ActivityOptions
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.andi.storyapp.adapter.AdapterStories
 import com.andi.storyapp.databinding.ActivityMainBinding
-import com.andi.storyapp.model.MainViewModel
-import com.andi.storyapp.model.SavePrefObject
-import com.andi.storyapp.model.Savepref
-import com.andi.storyapp.model.response.ResponseStories
+import com.andi.storyapp.model.response.ApiResult
 import com.andi.storyapp.model.response.Story
+import com.andi.storyapp.preference.PreferenceLogin
 import com.andi.storyapp.ui.add.AddStoryActivity
 import com.andi.storyapp.ui.auth.LoginActivity
 import com.andi.storyapp.ui.detail.DetailStoryActivity
+import com.andi.storyapp.ui.viewmodel.StoryViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
-    private lateinit var mainModel:MainViewModel
+    private val storyViewModel:StoryViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-         val sharePref = SavePrefObject.initPref(this)
-        val token = sharePref.getString(Savepref.TOKEN,null)
+        val prefLogin = PreferenceLogin(this)
+        val token = prefLogin.getToken()
         if (token.isNullOrEmpty()){
             val intent = Intent(this,LoginActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
 
-          mainModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())[MainViewModel::class.java]
-        mainModel.getStories(this)
-        mainModel.isLoading.observe(this){isloading->
-            showLoading(isloading)
-        }
-
-        mainModel.stories.observe(this){stories->
-            setupList(stories)
+        storyViewModel.storiesV2.observe(this){stories->
+            when(stories){
+                is ApiResult.Success->{
+                    setupList(stories.data)
+                    showLoading(false)
+                }
+                is ApiResult.Error->{
+                    Log.e("STORIES",stories.errorMessage)
+                    showLoading(false)
+                }
+                is ApiResult.Loading->{
+                    showLoading(true)
+                }
+            }
         }
 
         binding.fab.setOnClickListener {
-            startActivity(Intent(this,AddStoryActivity::class.java))
+            startActivity(Intent(this,AddStoryActivity::class.java),ActivityOptions.makeSceneTransitionAnimation(this@MainActivity).toBundle())
         }
 
         if (!allPermissionsGranted()) {
@@ -66,15 +72,15 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mainModel.getStories(this)
+        storyViewModel.getStoriesV2()
     }
 
-    private fun setupList(listStori:ResponseStories) {
+    private fun setupList(listStori:List<Story>) {
         val adapterStori = AdapterStories(listStori,this,object : AdapterStories.StoriesListener{
             override fun onKlik(story: Story) {
                 val intent = Intent(this@MainActivity, DetailStoryActivity::class.java)
                 intent.putExtra(DATA,story)
-                startActivity(intent)
+                startActivity(intent,ActivityOptions.makeSceneTransitionAnimation(this@MainActivity).toBundle())
             }
         })
         val layoutManager = LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
@@ -131,18 +137,16 @@ class MainActivity : AppCompatActivity() {
     }
     private fun showLoading(isLoading: Boolean) {
         binding.progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
-
     }
     private fun logout(){
-        val edit = SavePrefObject.editorPreference(this)
-        edit.clear().apply()
+       val prefLogin = PreferenceLogin(this)
+        prefLogin.clearToken()
         val intent = Intent(this,LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
 
     companion object{
-
         const val DATA = "DATA"
         const val CAMERA_X_RESULT = 200
         private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA)
