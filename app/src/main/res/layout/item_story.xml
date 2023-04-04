@@ -17,7 +17,8 @@
             tools:src="@tools:sample/backgrounds/scenic"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:scaleType="center"/>
+            android:scaleType="centerCrop"
+            android:contentDescription="@string/gambar_preview" />
         <TextView
             android:layout_marginHorizontal="5dp"
             android:id="@+id/tvName"

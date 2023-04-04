@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" >StoryApp</string>
+    <string name="login">Masuk</string>
+    <string name="please_sign_in_to_continue" >Masuk untuk melanjutkan.</string>
+    <string name="sign_up" >Daftar</string>
+    <string name="don_t_have_an_account" >Belum punya akun ?</string>
+    <string name="to_sign_up" >Daftar</string>
+    <string name="sign_up_title" >Daftar</string>
+    <string name="make_sure_the_are_correct" >Pastikan semua benar</string>
+    <string name="name" >Nama</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Masuk</string>
+    <string name="nama_placeholder">Nama</string>
+    <string name="description_placehlder">Description</string>
+    <string name="camera">Kamera</string>
+    <string name="galeri">Galeri</string>
+    <string name="upload">Unggah</string>
+    <string name="masukan_deskripsi" >Masukan deskripsi</string>
+    <string name="gambar_preview" >Gambar pratinjau</string>
+    <string name="logout" >Keluar</string>
+    <string name="masukan_nama_anda">Masukan Nama</string>
+    <string name="memotret_gambar">Ambil foto</string>
+    <string name="switch_camera" >balik kamera</string>
+    <string name="add_button">add button</string>
+</resources>

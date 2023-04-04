@@ -16,12 +16,15 @@
         android:layout_marginTop="150dp"
         android:fontFamily="@font/poppins_semibold"
         android:text="@string/login"
-        android:textColor="@color/black"
         android:textSize="30sp"
+        android:alpha="0"
+        tools:alpha="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:alpha="0"
+        tools:alpha="1"
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,10 +36,14 @@
         app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
-    <EditText
+    <com.andi.storyapp.ui.customui.EmailEditText
+        android:alpha="0"
+        tools:alpha="1"
         android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        android:background="@drawable/stroke_round5_grey"
+        android:paddingLeft="5dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="50dp"
         android:layout_marginEnd="24dp"
@@ -44,8 +51,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-    <EditText
+    <com.andi.storyapp.ui.customui.PasswordEditText
+        android:alpha="0"
+        tools:alpha="1"
         android:id="@+id/etPwd"
+        android:paddingLeft="5dp"
+        android:inputType="textPassword"
+        android:background="@drawable/stroke_round5_grey"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="24dp"
@@ -57,6 +69,8 @@
         app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
     <TextView
+        android:alpha="0"
+        tools:alpha="1"
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,6 +79,8 @@
         app:layout_constraintStart_toStartOf="@+id/etEmail" />
 
     <TextView
+        android:alpha="0"
+        tools:alpha="1"
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,6 +89,8 @@
         app:layout_constraintStart_toStartOf="@+id/etPwd" />
 
     <Button
+        android:alpha="0"
+        tools:alpha="1"
         android:textColor="@color/white"
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
