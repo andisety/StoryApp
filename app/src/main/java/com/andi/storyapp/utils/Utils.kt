@@ -53,7 +53,6 @@ fun rotateBitmap(bitmap: Bitmap, isBackCamera: Boolean = false): Bitmap {
         )
     } else {
         matrix.postRotate(-90f)
-        matrix.postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f)
         Bitmap.createBitmap(
             bitmap,
             0,
@@ -80,9 +79,14 @@ fun uriToFile(selectedImg: Uri, context: Context): File {
 
     return myFile
 }
-fun reduceFileImage(file: File,isBackCamera:Boolean): File {
+fun reduceFileImage(file: File,isBackCamera:Boolean,isGalery:Boolean ): File {
     var bitmap = BitmapFactory.decodeFile(file.path)
-    bitmap = rotateBitmap(bitmap, isBackCamera)
+    bitmap = if (isGalery){
+        rotateBitmap(bitmap,false)
+    }else{
+        rotateBitmap(bitmap,isBackCamera)
+    }
+
     var compressQuality = 100
     var streamLength: Int
     do {

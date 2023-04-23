@@ -1,11 +1,14 @@
 package com.andi.storyapp.ui.add
 
+
+import android.Manifest
 import android.app.ActivityOptions
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.Intent.ACTION_GET_CONTENT
-import android.graphics.Bitmap
+import android.content.pm.PackageManager
 import android.graphics.BitmapFactory
+import android.location.Location
 import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
@@ -13,6 +16,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.andi.storyapp.MainActivity
 import com.andi.storyapp.MainActivity.Companion.CAMERA_X_RESULT
 import com.andi.storyapp.R
@@ -21,24 +25,29 @@ import com.andi.storyapp.model.response.ApiResult
 import com.andi.storyapp.preference.PreferenceLogin
 import com.andi.storyapp.ui.camera.CameraActivity
 import com.andi.storyapp.ui.viewmodel.StoryViewModel
+import com.andi.storyapp.utils.reduceFileImage
 import com.andi.storyapp.utils.rotateBitmap
 import com.andi.storyapp.utils.uriToFile
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
 
 class AddStoryActivity : AppCompatActivity() {
     private lateinit var binding:ActivityAddStoryBinding
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private var getFile: File? = null
     private  var isBackCamera:Boolean = false
+    private  var isGalery:Boolean = false
     private lateinit var builder:AlertDialog.Builder
     private lateinit var dialog:AlertDialog
     private val storyViewModel:StoryViewModel by viewModels()
+    private var lat:Float?=null
+    private var lon:Float?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddStoryBinding.inflate(layoutInflater)
@@ -46,7 +55,8 @@ class AddStoryActivity : AppCompatActivity() {
         supportActionBar?.title = "Add Story"
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setupDialogLoading()
-
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        getMyLastLocation()
         storyViewModel.responseUpload.observe(this){result->
             when(result){
                 is ApiResult.Success->{
@@ -69,7 +79,12 @@ class AddStoryActivity : AppCompatActivity() {
         }
 
         binding.btnUpload.setOnClickListener {
-            uploadImage()
+            if(binding.checkedLocation.isChecked){
+                uploadImage(lat,lon)
+            }else{
+                uploadImage()
+            }
+
         }
 
         binding.btnGaleri.setOnClickListener {
@@ -84,6 +99,11 @@ class AddStoryActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isGalery=false
     }
 
     private fun setupDialogLoading(){
@@ -102,23 +122,6 @@ class AddStoryActivity : AppCompatActivity() {
 
     }
 
-    private fun reduceFileImage(file: File,isBackCamera:Boolean): File {
-        var bitmap = BitmapFactory.decodeFile(file.path)
-        bitmap = rotateBitmap(bitmap, isBackCamera)
-        var compressQuality = 100
-        var streamLength: Int
-        do {
-            val bmpStream = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
-            val bmpPicByteArray = bmpStream.toByteArray()
-            streamLength = bmpPicByteArray.size
-            compressQuality -= 5
-        } while (streamLength > 1000000)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
-
-        return file
-    }
-
     private val launcherIntentCameraX = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
@@ -126,7 +129,7 @@ class AddStoryActivity : AppCompatActivity() {
             val myFile = it.data?.getSerializableExtra("picture") as File
             isBackCamera = it.data?.getBooleanExtra("isBackCamera", true) as Boolean
             getFile = myFile
-
+            isGalery=false
             val result = rotateBitmap(
                 BitmapFactory.decodeFile(myFile.path),
                 isBackCamera
@@ -140,6 +143,7 @@ class AddStoryActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
+            isGalery=true
             val selectedImg: Uri = result.data?.data as Uri
             val myFile = uriToFile(selectedImg, this)
             getFile = myFile
@@ -156,14 +160,14 @@ class AddStoryActivity : AppCompatActivity() {
         launcherIntentGallery.launch(chooser)
     }
 
-    private fun uploadImage() {
+    private fun uploadImage(latParam:Float?=null,lonParam:Float?=null) {
         if (getFile != null) {
             val desc = binding.etDesc.text.toString()
             if (desc.isEmpty()){
                 binding.etDesc.error = "Masukan deskripsi"
                 binding.etDesc.requestFocus()
             }else{
-                val file = reduceFileImage(getFile as File,isBackCamera)
+                val file = reduceFileImage(getFile as File,isBackCamera,isGalery)
                 val description = desc.toRequestBody("text/plain".toMediaType())
                 val requestImageFile = file.asRequestBody("image/jpeg".toMediaTypeOrNull())
                 val imageMultipart: MultipartBody.Part = MultipartBody.Part.createFormData(
@@ -174,7 +178,7 @@ class AddStoryActivity : AppCompatActivity() {
                 val prefLogin = PreferenceLogin(this)
                 var token = prefLogin.getToken().toString()
                 token = "Bearer $token"
-                storyViewModel.uploadStory(token,imageMultipart,description)
+                storyViewModel.uploadStory(token,imageMultipart,description,latParam,lonParam)
             }
         } else {
             Toast.makeText(this, "Silakan masukkan berkas gambar terlebih dahulu.", Toast.LENGTH_SHORT).show()
@@ -204,10 +208,69 @@ class AddStoryActivity : AppCompatActivity() {
           builder.show()
       }
 
+
     }
+
+
+
+
+    private fun getMyLastLocation() {
+        if(checkPermission(Manifest.permission.ACCESS_FINE_LOCATION) &&
+            checkPermission(Manifest.permission.ACCESS_COARSE_LOCATION)
+        ){
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    lat=location.latitude.toFloat()
+                    lon=location.longitude.toFloat()
+                } else {
+                    Toast.makeText(
+                        this,
+                        "Location is not found. Try Again",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+        }else {
+            requestPermissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                )
+            )
+        }
+    }
+
+
+    private val requestPermissionLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false -> {
+                    // Precise location access granted.
+                    getMyLastLocation()
+                }
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false -> {
+                    // Only approximate location access granted.
+                    getMyLastLocation()
+                }
+                else -> {
+                    // No location access granted.
+                }
+            }
+        }
+    private fun checkPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(
+            this,
+            permission
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+
     companion object{
         const val SUCCESS = "success"
         const val ERROR = "error"
     }
+
 
 }

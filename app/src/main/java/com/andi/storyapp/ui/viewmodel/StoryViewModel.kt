@@ -32,7 +32,7 @@ class StoryViewModel(application: Application):AndroidViewModel(application) {
             _storiesV2.value = ApiResult.Loading
             val token = PreferenceLogin(context).getToken()
             try {
-                val response = ApiConfig.getApiService().getStoriesv2(token = "Bearer $token")
+                val response = ApiConfig.getApiService().getStoriesMap(token = "Bearer $token")
                 if (response.isSuccessful){
                     val result = response.body()
                     if (result != null) {
@@ -47,11 +47,11 @@ class StoryViewModel(application: Application):AndroidViewModel(application) {
         }
     }
 
-    fun uploadStory(token:String,file:MultipartBody.Part,description:RequestBody){
+    fun uploadStory(token:String,file:MultipartBody.Part,description:RequestBody,lat:Float?,lon:Float?){
         viewModelScope.launch {
             _responseUpload.value = ApiResult.Loading
             try {
-                val response = ApiConfig.getApiService().uploadImage(token,file,description)
+                val response = ApiConfig.getApiService().uploadImage(token,file,description,lat,lon)
                 if (response.isSuccessful){
                     val result = response.body()
                     if (result!=null){

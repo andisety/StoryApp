@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="add_button">add button</string>
+    <string name="language">Language</string>
+    <string name="maps_story">Maps Story</string>
+    <string name="include_location">Include Location</string>
 </resources>

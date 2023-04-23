@@ -11,7 +11,14 @@ import retrofit2.http.*
 interface ApiService {
 
     @GET("stories")
-    suspend fun getStoriesv2(
+    suspend fun getStories(
+        @Header("Authorization") token: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ):StoryRespons
+
+    @GET("stories?location=1")
+    suspend fun getStoriesMap(
         @Header("Authorization") token: String,
     ): Response<ResponseStories>
 
@@ -36,5 +43,7 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Part file: MultipartBody.Part,
         @Part("description") description: RequestBody,
+        @Part("lat") lat: Float?=null,
+        @Part("lon") lon: Float?=null,
     ): Response<ResponseStatus>
 }

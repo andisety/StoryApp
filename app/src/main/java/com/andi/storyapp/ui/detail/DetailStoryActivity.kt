@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.andi.storyapp.MainActivity.Companion.DATA
 import com.andi.storyapp.databinding.ActivityDetailBinding
-import com.andi.storyapp.model.response.Story
+import com.andi.storyapp.network.StoryResponeItem
 import com.bumptech.glide.Glide
 
 class DetailStoryActivity : AppCompatActivity() {
@@ -18,7 +18,7 @@ class DetailStoryActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val stori = intent?.getParcelableExtra<Story>(DATA)
+        val stori = intent?.getParcelableExtra<StoryResponeItem>(DATA)
         supportActionBar?.title = stori?.name
         binding.apply {
             tvName.text = stori?.name
