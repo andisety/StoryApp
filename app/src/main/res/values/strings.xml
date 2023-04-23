@@ -1,13 +1,13 @@
 <resources>
-    <string name="app_name" >StoryApp</string>
+    <string name="app_name">StoryApp</string>
     <string name="login">Login</string>
-    <string name="please_sign_in_to_continue" >Please Sign in to Continue.</string>
-    <string name="sign_up" >Sign Up</string>
-    <string name="don_t_have_an_account" >Don\'t have an account?</string>
-    <string name="to_sign_up" >Sign Up</string>
-    <string name="sign_up_title" >Sign Up</string>
-    <string name="make_sure_the_are_correct" >Make sure the are correct</string>
-    <string name="name" >Name</string>
+    <string name="please_sign_in_to_continue">Please Sign in to Continue.</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="to_sign_up">Sign Up</string>
+    <string name="sign_up_title">Sign Up</string>
+    <string name="make_sure_the_are_correct">Make sure the are correct</string>
+    <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="sign_in">Sign In</string>
@@ -16,11 +16,15 @@
     <string name="camera">Camera</string>
     <string name="galeri">Galery</string>
     <string name="upload">Upload</string>
-    <string name="masukan_deskripsi" >Insert description</string>
-    <string name="gambar_preview" >Image Preview</string>
-    <string name="logout" >logout</string>
+    <string name="masukan_deskripsi">Insert description</string>
+    <string name="gambar_preview">Image Preview</string>
+    <string name="logout">logout</string>
     <string name="masukan_nama_anda">Insert your name</string>
     <string name="memotret_gambar">take photo</string>
-    <string name="switch_camera" >switch camera</string>
+    <string name="switch_camera">switch camera</string>
     <string name="add_button">add button</string>
+    <string name="language">Language</string>
+    <string name="title_activity_story_maps">StoryMapsActivity</string>
+    <string name="maps_story">Maps Story</string>
+    <string name="include_location">Include Location</string>
 </resources>
