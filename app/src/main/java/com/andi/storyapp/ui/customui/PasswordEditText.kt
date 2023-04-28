@@ -29,11 +29,12 @@ class PasswordEditText:AppCompatEditText {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        hint = "Masukan password anda"
+
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
 
     private fun init(){
+        hint = "Masukan password anda"
         setupBorder()
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {

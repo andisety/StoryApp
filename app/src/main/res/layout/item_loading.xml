@@ -27,5 +27,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="COba Lagi" />
+        android:text="@string/coba_lagi" />
 </LinearLayout>

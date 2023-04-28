@@ -19,4 +19,7 @@ object DataDummy {
         }
         return storyList
     }
+    fun generateDataNul(): List<StoryResponeItem> {
+        return emptyList()
+    }
 }

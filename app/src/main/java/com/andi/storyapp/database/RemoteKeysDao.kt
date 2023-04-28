@@ -1,10 +1,10 @@
-package com.dicoding.myunlimitedquotes.database
+package com.andi.storyapp.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.andi.storyapp.database.RemoteKeys
+
 
 @Dao
 interface RemoteKeysDao {

@@ -30,11 +30,11 @@ class EmailEditText:AppCompatEditText {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        hint = "Masukan email anda"
         textAlignment = View.TEXT_ALIGNMENT_VIEW_START
     }
 
     private fun init(){
+        hint = "Masukan email anda"
         setupBorder()
         addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {
