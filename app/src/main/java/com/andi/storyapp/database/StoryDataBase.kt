@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.andi.storyapp.network.StoryResponeItem
-import com.dicoding.myunlimitedquotes.database.RemoteKeysDao
 
 @Database(
     entities = [StoryResponeItem::class, RemoteKeys::class],

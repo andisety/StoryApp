@@ -8,7 +8,7 @@ import com.andi.storyapp.data.StoryRepository
 import com.andi.storyapp.di.Injection
 import com.andi.storyapp.network.StoryResponeItem
 
-class ViewModelLocal(storyRepository:StoryRepository):ViewModel() {
+class ViewModelLocal(val storyRepository:StoryRepository):ViewModel() {
     val story:LiveData<PagingData<StoryResponeItem>> by lazy {  storyRepository.getStory().cachedIn(viewModelScope) }
 }
 

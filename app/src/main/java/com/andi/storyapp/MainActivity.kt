@@ -107,9 +107,9 @@ class MainActivity : AppCompatActivity() {
         )
         viewModelLocal.story.observe(this) {
             adapter.submitData(lifecycle, it)
-            binding.rcList.adapter = adapter
-            binding.rcList.layoutManager = layoutManager
         }
+        binding.rcList.adapter = adapter
+        binding.rcList.layoutManager = layoutManager
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

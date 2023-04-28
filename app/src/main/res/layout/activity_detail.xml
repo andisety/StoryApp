@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:scaleType="center"
                 android:layout_height="300dp"
-                android:contentDescription="background kuning" />
+                android:contentDescription="@string/background_kuning" />
             <LinearLayout
                 android:layout_marginTop="-20dp"
                 android:orientation="vertical"

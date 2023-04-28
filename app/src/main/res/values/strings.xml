@@ -27,4 +27,7 @@
     <string name="title_activity_story_maps">StoryMapsActivity</string>
     <string name="maps_story">Maps Story</string>
     <string name="include_location">Include Location</string>
+    <string name="coba_lagi">Coba Lagi</string>
+    <string name="loading">Loading..</string>
+    <string name="background_kuning">background kuning</string>
 </resources>
